@@ -1,0 +1,14 @@
+{
+    "app_name": "PasswordManager",
+    "version" : "v1.0.2",
+    "copyright" : "By: Thomas Lu",
+    "year" : 2023,
+    "theme_name" : "test_PasswordManager",
+    "icon": "E:\\PasswordManager\\Resources\\Password Manage_Icon.ico",
+
+    "mysql_host": "localhost",
+    "user":"root",
+    "password":"7bf9108cd896f33C!",
+
+    "absolute_path": "E:\\PasswordManager"
+}
