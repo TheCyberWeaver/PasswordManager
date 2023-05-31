@@ -54,7 +54,7 @@ class SetupMainWindow:
         # ///////////////////////////////////////////////////////////////
 
         self.setWindowTitle(self.settings["app_name"])
-        self.setWindowIcon(QtGui.QIcon(self.settings["icon"]))
+        self.setWindowIcon(QtGui.QIcon(os.path.join(Settings().get_project_path(),self.settings["icon"])))
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
         settings = Settings(self.settingFilesFolderPath)

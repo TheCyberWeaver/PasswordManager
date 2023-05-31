@@ -19,33 +19,38 @@
 import json
 import os
 
-# APP SETTINGS
+# IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////
-class Settings(object):
-    # APP PATH
-    # ///////////////////////////////////////////////////////////////
+from gui.core.json_settings import Settings
 
-    
+# APP THEMES
+# ///////////////////////////////////////////////////////////////
+class Themes(object):
+
+
     # INIT SETTINGS
     # ///////////////////////////////////////////////////////////////
     def __init__(self,settings_path="default"):
-        super(Settings, self).__init__()
+        super(Themes, self).__init__()
 
-        self.json_file = "settings.json"
-        self.app_path = os.path.abspath(os.getcwd())
-        if settings_path=="default":
-            self.settings_path = os.path.normpath(os.path.join(self.app_path, self.json_file))
-        elif settings_path=="global":
-            self.settings_path=os.path.join(self.get_project_path(),self.json_file)
-        else:
-            self.settings_path=os.path.join(os.path.join(self.get_project_path(),settings_path),self.json_file)
+        # LOAD SETTINGS
+        # ///////////////////////////////////////////////////////////////
+        setup_settings = Settings(settings_path)
+        _settings = setup_settings.items
+
+        # APP PATH
+        # ///////////////////////////////////////////////////////////////
+        json_file = f"gui/themes/{_settings['theme_name']}.json"
+        app_path = os.path.abspath(os.getcwd())
+
+        #self.settings_path = os.path.normpath(os.path.join(app_path, json_file))
+        #print(_settings)
+        self.settings_path=os.path.join(self.get_project_path(),json_file)
         if not os.path.isfile(self.settings_path):
-            print(f"[WARNING]: \"settings.json\" not found! check in the folder {self.settings_path}")
-
-
+            print(
+                f"WARNING: \"gui/themes/{_settings['theme_name']}.json\" not found! check in the folder {self.settings_path}")
 
         # DICTIONARY WITH SETTINGS
-        # Just to have objects references
         self.items = {}
 
         # DESERIALIZE

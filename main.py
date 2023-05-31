@@ -150,8 +150,7 @@ class PasswordManagerWindow(QWidget):
         else:
             return
         print("[info]: Deleting row",currentRowIndex)
-        for j in range(5):
-            self.table_widget.setItem(currentRowIndex, j, QTableWidgetItem(""))
+        self.table_widget.removeRow(currentRowIndex)
         # 统计信息
 
     def updateStatistic(self, result):

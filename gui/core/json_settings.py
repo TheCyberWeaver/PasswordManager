@@ -68,8 +68,8 @@ class Settings(object):
 
     def get_project_path(self):
         # 项目名称
-        p_name = 'PasswordManager'
+        p_name = "\gui\core"
         # 获取当前文件的绝对路径
         p_path = os.path.abspath(os.path.dirname(__file__))
         # 通过字符串截取方式获取
-        return p_path[:p_path.index(p_name) + len(p_name)]
+        return p_path[:p_path.index(p_name)]

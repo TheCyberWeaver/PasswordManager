@@ -5,10 +5,8 @@
     "year" : 2023,
     "theme_name" : "test_PasswordManager",
     "icon": "E:\\PasswordManager\\Resources\\Password Manage_Icon.ico",
-
+    "app_main":"E:\\PasswordManager\\output\\PasswordManager\\PasswordManager.exe",
     "mysql_host": "localhost",
     "user":"root",
-    "password":"7bf9108cd896f33C!",
-
-    "absolute_path": "E:\\PasswordManager"
+    "password":"7bf9108cd896f33C!"
 }
