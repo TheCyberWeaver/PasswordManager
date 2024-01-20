@@ -41,7 +41,6 @@ class Themes(object):
         # APP PATH
         # ///////////////////////////////////////////////////////////////
         json_file = f"gui/themes/{_settings['theme_name']}.json"
-        app_path = os.path.abspath(os.getcwd())
 
         #self.settings_path = os.path.normpath(os.path.join(app_path, json_file))
         #print(_settings)

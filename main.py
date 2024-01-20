@@ -16,6 +16,8 @@ from PySide6.QtWidgets import QApplication, QWidget
 from gui.core.json_settings import Settings
 from setup_ui import *
 from ui_PasswordManager import Ui_Dialog
+
+
 # 继承QWidget类，以获取其属性和方法
 class PasswordManagerWindow(QWidget):
     def __init__(self):
