@@ -5,6 +5,7 @@ import mysql.connector
 import string
 import time
 
+from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
@@ -68,19 +69,22 @@ class PasswordManagerWindow(QWidget):
         self.push_button_2.clicked.connect(lambda: self.table_widget.insertRow(self.table_widget.rowCount()))
         self.push_button_3.clicked.connect(lambda: self.deleteCurrentRow())
         self.line_edit_1.textEdited.connect(lambda: self.updateTable())
+    def setEnableTable(self, enable:bool):
+        self.table_widget.setEnabled(enable)
+
     def updateTable(self):
         searchText = str(self.line_edit_1.text())
         if searchText=="":
-            self.table_widget.setEnabled(True)
+            self.setEnableTable(True)
         else:
-            self.table_widget.setEnabled(False)
+            self.setEnableTable(False)
 
         self.table_widget.clearContents()
         self.table_widget.setRowCount(0)
 
         for id, name, username, password, date, other, description in self.fetchedTableContent:
-            if name.find(searchText) != -1 :
-                print(id, name, username, password, date, other, description)
+            if name.lower().find(searchText.lower()) != -1 or other.lower().find(searchText.lower()) != -1 or description.lower().find(searchText.lower()) != -1:
+                # print(id, name, username, password, date, other, description)
                 row_number = self.table_widget.rowCount()
                 self.table_widget.insertRow(row_number)  # Insert row
                 self.table_widget.setItem(row_number, 0, QTableWidgetItem(name))  # Add name
