@@ -6,7 +6,7 @@
     "theme_name" : "test_PasswordManager",
     "icon": "E:\\PasswordManager\\Resources\\Password Manage_Icon.ico",
     "app_main":"E:\\PasswordManager\\output\\PasswordManager\\PasswordManager.exe",
-    "mysql_host": "localhost",
+    "mysql_host": "thomas-hub.com",
     "user":"root",
     "password":"7bf9108cd896f33C!"
 }

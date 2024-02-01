@@ -241,6 +241,22 @@ class SetupMainWindow:
         self.column_5.setTextAlignment(Qt.AlignCenter)
         self.column_5.setText("Description")
 
+
+        # Search horizontalLayout_Search
+        self.line_edit_1 = PyLineEdit(
+            text="",
+            place_holder_text="Search for your password",
+            radius=8,
+            border_size=2,
+            color=self.themes["app_color"]["text_foreground"],
+            selection_color=self.themes["app_color"]["white"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_active=self.themes["app_color"]["dark_three"],
+            context_color=self.themes["app_color"]["context_color"]
+        )
+        self.line_edit_1.setMinimumHeight(35)
+        self.line_edit_1.setMaximumWidth(300)
+
         # Set column
         self.table_widget.setHorizontalHeaderItem(0, self.column_1)
         self.table_widget.setHorizontalHeaderItem(1, self.column_2)
@@ -260,4 +276,6 @@ class SetupMainWindow:
         self.ui.horizontalLayout_3.addWidget(self.push_button_3)
 
         self.ui.horizontalLayout_4.addWidget(self.table_widget)
+
+        self.ui.horizontalLayout_Search.addWidget(self.line_edit_1)
 

@@ -55,15 +55,40 @@ class PasswordManagerWindow(QWidget):
         self.cursorObject.execute(useDatabase)
         self.cursorObject.execute(createTable)
 
+        self.fetchedTableContent=[]
         self.fetchAllFromDatabase()
 
         self.uiInitiation()
+
+
 
     def uiInitiation(self):
         self.icon_button_1.clicked.connect(lambda: self.fetchAllFromDatabase())
         self.push_button_1.clicked.connect(lambda: self.saveAll())
         self.push_button_2.clicked.connect(lambda: self.table_widget.insertRow(self.table_widget.rowCount()))
         self.push_button_3.clicked.connect(lambda: self.deleteCurrentRow())
+        self.line_edit_1.textEdited.connect(lambda: self.updateTable())
+    def updateTable(self):
+        searchText = str(self.line_edit_1.text())
+        if searchText=="":
+            self.table_widget.setEnabled(True)
+        else:
+            self.table_widget.setEnabled(False)
+
+        self.table_widget.clearContents()
+        self.table_widget.setRowCount(0)
+
+        for id, name, username, password, date, other, description in self.fetchedTableContent:
+            if name.find(searchText) != -1 :
+                print(id, name, username, password, date, other, description)
+                row_number = self.table_widget.rowCount()
+                self.table_widget.insertRow(row_number)  # Insert row
+                self.table_widget.setItem(row_number, 0, QTableWidgetItem(name))  # Add name
+                self.table_widget.setItem(row_number, 1, QTableWidgetItem(username))  # Add user
+                self.table_widget.setItem(row_number, 2, QTableWidgetItem(password))  # Add pass
+                self.table_widget.setItem(row_number, 3, QTableWidgetItem(other))  # Add pass
+                self.table_widget.setItem(row_number, 4, QTableWidgetItem(description))
+                self.table_widget.setRowHeight(row_number, 22)
 
     def fetchAllFromDatabase(self):
 
@@ -77,7 +102,7 @@ class PasswordManagerWindow(QWidget):
 
         result = self.cursorObject.fetchall()
         # print(result)
-
+        self.fetchedTableContent=result
         for id, name, username, password, date, other, description in result:
             row_number = self.table_widget.rowCount()
             self.table_widget.insertRow(row_number)  # Insert row
@@ -93,7 +118,7 @@ class PasswordManagerWindow(QWidget):
 
     def saveAll(self):
 
-        self.cursorObject.execute("DELETE FROM passwords")  # 先删除整个表，然后重新填写，逻辑最简单，保证数据库id完整性，没有跳行
+        # self.cursorObject.execute("DELETE FROM passwords")  # 先删除整个表，然后重新填写，逻辑最简单，保证数据库id完整性，没有跳行
         date = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
         row_number = self.table_widget.rowCount()
@@ -134,13 +159,14 @@ class PasswordManagerWindow(QWidget):
                    "\')ON DUPLICATE KEY UPDATE " \
                    "id="+str(databaseID)+",name= \'"+name+"\'"+",username= \'"+username+"\'"+",password= \'"+password+"\'"+",date= \'"+date+"\'"+",other= \'"+other+"\'"+",description= \'"+description+"\'"+";" """
 
-            insert = "INSERT INTO passwords (id,name,username,password,date,other,description) values (" \
-                     + str(
-                databaseID) + ",\'" + name + "\' , \'" + username + "\' , \'" + password + "\' , \'" + date + "\' , \'" + other + "\' , \'" + description + "\')"  # 加入这一行
+            insert = "REPLACE INTO passwords (id,name,username,password,date,other,description) values (" \
+                     + str(databaseID) + ",\'" + name + "\' , \'" + username + "\' , \'" + password + "\' , \'" + date + "\' , \'" + other + "\' , \'" + description + "\')"  # 加入这一行
+
             self.cursorObject.execute(insert)
             # print(insert)
             databaseID += 1
-
+        delete= "DELETE FROM passwords WHERE id >= " +str(databaseID)
+        self.cursorObject.execute(delete)
         print("[Info]: save all data to database")
         self.fetchAllFromDatabase()  # 保存后刷新数据
 
@@ -227,9 +253,7 @@ class PasswordManagerWindow(QWidget):
 
     # MOUSE CLICK EVENTS
     # ///////////////////////////////////////////////////////////////
-    def mousePressEvent(self, event):
-        # SET DRAG POS WINDOW
-        self.dragPos = event.globalPos()
+
 # 程序入口
 if __name__ == "__main__":
     # 初始化QApplication，界面展示要包含在QApplication初始化之后，结束之前

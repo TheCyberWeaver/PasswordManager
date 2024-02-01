@@ -70,6 +70,11 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
+        self.horizontalLayout_Search = QHBoxLayout()
+        self.horizontalLayout_Search.setObjectName(u"horizontalLayout_Search")
+
+        self.verticalLayout.addLayout(self.horizontalLayout_Search)
+
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
 
